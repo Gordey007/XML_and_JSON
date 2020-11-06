@@ -23,7 +23,7 @@ namespace Homework_08
         /// </summary>
         /// <param name="СoncreteWorker">Коллекция для сериализации</param>
         /// <param name="Path">Путь к файлу</param>
-        public void SerializeWorkerListXML(string Path, List<Worker> WorkerList = null, List<Department> DepartmentList = null)
+        public void SerializeWorkerListXML(string Path, List<Worker> WorkerList)
         {
             // Создаем сериализатор на основе указанного типа 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Worker>));

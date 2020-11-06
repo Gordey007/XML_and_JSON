@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collection.cs" />
-    <Compile Include="Company.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />

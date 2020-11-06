@@ -59,7 +59,6 @@ namespace Homework_08
 
         #endregion
 
-
         #region Поля
 
         /// <summary>
