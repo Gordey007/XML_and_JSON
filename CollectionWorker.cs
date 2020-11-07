@@ -93,7 +93,9 @@ namespace Homework_08
             // Цикл создания нового Departments и добавления его в список workerList
             for (uint i = 0; i < n; i++)
             {
-                System.Threading.Thread.Sleep(100);
+                // Пауза т.к. рандом записывает одинаковые значени, но пауза не помагает от записи одинаковых значение в полях
+                // В дебаги записывает всё норм
+                System.Threading.Thread.Sleep(30);
                 workerList.Add(new Worker(
                 i + 1,
                 GeneratingSyntheticData(0),

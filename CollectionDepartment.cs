@@ -91,7 +91,7 @@ namespace Homework_08
             // Цикл создания нового Departments и добавления его в список workerList
             for (uint i = 0; i < n; i++)
             {
-                System.Threading.Thread.Sleep(100);
+                System.Threading.Thread.Sleep(50);
                 departmentList.Add(new Department(
                 GeneratingSyntheticData(0),
                 DateTime.Parse(GeneratingSyntheticData(1)),
