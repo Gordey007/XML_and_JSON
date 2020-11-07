@@ -3,27 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Homework_08
 {
-    class Collection
+    class CollectionWorker
     {
-        //Worker worker = new Worker();
-
-        // Списки типа данных Worker и Department
+        // Списки типа данных Worker
         public List<Worker> workerList = new List<Worker> { };
-        public List<Department> departments = new List<Department> { };
 
 
         /// <summary>
-        /// Метод сериализации List<Worker>
+        /// Метод сериализации List<workerList>
         /// </summary>
         /// <param name="СoncreteWorker">Коллекция для сериализации</param>
         /// <param name="Path">Путь к файлу</param>
-        public void SerializeWorkerListXML(string Path, List<Worker> WorkerList)
+        public void SerializeXML(string Path, List<Worker> WorkerList)
         {
             // Создаем сериализатор на основе указанного типа 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Worker>));
@@ -40,11 +35,11 @@ namespace Homework_08
 
 
         /// <summary>
-        /// Метод десериализации List<Worker>
+        /// Метод десериализации List<workerList>
         /// </summary>
         /// <param name="СoncreteWorker">Экземпляр для сериализации</param>
         /// <param name="Path">Путь к файлу</param>
-        public List<Worker> DeserializeWorkerListXML(string Path)
+        public List<Worker> DeserializeXML(string Path)
         {
             List<Worker> tempWorkerCol;
             // Создаем сериализатор на основе указанного типа 
@@ -65,11 +60,11 @@ namespace Homework_08
 
 
         /// <summary>
-        /// Метод десериализации и сериализации List<Worker>
+        /// Метод десериализации и сериализации List<workerList>
         /// </summary>
         /// <param name="flag">Флаг выбора действия</param>
         /// <param name="Path">Путь</param>
-        /// <param name="WorkerList">Список Worker</param>
+        /// <param name="WorkerList">Список Departments</param>
         /// <returns></returns>
         public List<Worker> JSON(bool flag, string Path, List<Worker> WorkerList = null)
         {
@@ -95,8 +90,7 @@ namespace Homework_08
 
         public void CountGeneratingSyntheticData(int n)
         {
-            uint j = 0;
-            // Цикл создания нового Worker и добавления его в список workerList
+            // Цикл создания нового Departments и добавления его в список workerList
             for (uint i = 0; i < n; i++)
             {
                 System.Threading.Thread.Sleep(100);
@@ -156,12 +150,12 @@ namespace Homework_08
         public void Print(List<Worker> workerList)
         {
             // Запись названия свойств в список
-            //List<string> getProperties = GetProperties(workerList);
+            List<string> getProperties = GetProperties(workerList);
 
             // Вывод шапки таблицы в консоль
-            //Console.WriteLine("{0,5} {1,5} {2,15} {3,5} {4,15} {5,10} {6,5}", getProperties[0], getProperties[1], getProperties[2], getProperties[3], getProperties[4], getProperties[5], getProperties[6]);
+            Console.WriteLine("{0,5} {1,5} {2,15} {3,5} {4,15} {5,10} {6,5}", getProperties[0], getProperties[1], getProperties[2], getProperties[3], getProperties[4], getProperties[5], getProperties[6]);
 
-            // Цикл вызова метода, который отображает Worker
+            // Цикл вызова метода, который отображает Departments
             for (int i = 0; i < workerList.Count; i++)
                 Console.WriteLine(workerList[i].Print());
         }
@@ -170,14 +164,14 @@ namespace Homework_08
         /// <summary>
         /// Метод добавления нового Worker
         /// </summary>
-        /// <param name="workerList">Список Worker</param>
+        /// <param name="workerList">Список Workeк</param>
         public void AddData(List<Worker> workerList)
         {
-            Console.WriteLine("Ввидете данные через Enter попорядку");
+            Console.WriteLine("Введете данные через Enter попорядку");
 
             GetProperties(workerList);
 
-            // Добавление в список нового Worker
+            // Добавление в список нового Departments
             workerList.Add(new Worker(
                     Convert.ToUInt32(Console.ReadLine()),
                     Console.ReadLine(),
@@ -198,7 +192,7 @@ namespace Homework_08
         {
             List<string> properties = new List<string> { };
             int i = 1;
-            // Получение свойств класса Worker
+            // Получение свойств класса Departments
             foreach (var property in workerList[0].GetType().GetProperties())
             {
                 // Пропуск свойств
@@ -237,17 +231,17 @@ namespace Homework_08
         public void EditData(List<Worker> workerList, int id)
         {
             // Присвоение новых значений свойствам
-            Console.Write("Ввидите имя: ");
+            Console.Write("Введите имя: ");
             workerList[id - 1].FirstName = Console.ReadLine();
-            Console.Write("Ввидите фамилию: ");
+            Console.Write("Введите фамилию: ");
             workerList[id - 1].LastName = Console.ReadLine();
-            Console.Write("Ввидите возраст: ");
+            Console.Write("Введите возраст: ");
             workerList[id - 1].Age = Convert.ToUInt32(Console.ReadLine());
-            Console.Write("Ввидите отдел: ");
+            Console.Write("Введите отдел: ");
             workerList[id - 1].Department = Console.ReadLine();
-            Console.Write("Ввидите оплату труда: ");
+            Console.Write("Введите оплату труда: ");
             workerList[id - 1].Salary = Convert.ToUInt32(Console.ReadLine());
-            Console.Write("Ввидите количество проектов: ");
+            Console.Write("Введите количество проектов: ");
             workerList[id - 1].NumberProjects = Convert.ToUInt32(Console.ReadLine());
         }
 
@@ -259,13 +253,13 @@ namespace Homework_08
         /// <param name="flag">Флаг выбора действий</param>
         /// <param name="fields">Выбор поелй</param>
         /// <returns></returns>
-        public List<Worker> SortWorkerList(List<Worker> workerList, uint flag, uint fields = 0)
+        public List<Worker> SortWorkerList(List<Worker> workerList, uint flag, uint firstFields, uint secondFields = 0)
         {
             switch (flag)
             {
                 // сортировка по одному полю
                 case 1:
-                    switch (fields)
+                    switch (firstFields)
                     {
                         // сортировка по полям
                         case 1:
@@ -296,90 +290,60 @@ namespace Homework_08
                     break;
                 // сортировка по двум полям
                 case 2:
-                    switch (fields)
-                    {
-                        case 12:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList());
-                            break;
-                        case 13:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.Age).ToList());
-                            break;
-                        case 14:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.Department).ToList());
-                            break;
-                        case 15:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.Salary).ToList());
-                            break;
-                        case 16:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 23:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.Age).ToList());
-                            break;
-                        case 24:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.Department).ToList());
-                            break;
-                        case 25:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.Salary).ToList());
-                            break;
-                        case 26:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 34:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Age).ThenBy(x => x.Department).ToList());
-                            break;
-                        case 35:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Age).ThenBy(x => x.Salary).ToList());
-                            break;
-                        case 36:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Age).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 45:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 46:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 56:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Salary).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                    }
+                    if(firstFields == 1 && secondFields == 2)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToList());
+                    else if (firstFields == 1 && secondFields == 3)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.Age).ToList());
+                    else if (firstFields == 1 && secondFields == 4)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.Department).ToList());
+                    else if (firstFields == 1 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.Salary).ToList());
+                    else if (firstFields == 1 && secondFields == 6)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.FirstName).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 2 && secondFields == 3)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.Age).ToList());
+                    else if (firstFields == 2 && secondFields == 4)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.Department).ToList());
+                    else if (firstFields == 2 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.Salary).ToList());
+                    else if (firstFields == 2 && secondFields == 6)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.LastName).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 3 && secondFields == 4)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Age).ThenBy(x => x.Department).ToList());
+                    else if (firstFields == 3 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Age).ThenBy(x => x.Salary).ToList());
+                    else if (firstFields == 3 && secondFields == 6)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Age).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 4 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 4 && secondFields == 6)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 5 && secondFields == 6)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Salary).ThenBy(x => x.NumberProjects).ToList());
+                    
                     break;
                 // Сортировка по двум полям относительно полю департамента 
                 case 3:
-                    switch (fields)
-                    {
-                        case 12:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.LastName).ToList());
-                            break;
-                        case 13:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.Age).ToList());
-                            break;
-                        case 14:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.Salary).ToList());
-                            break;
-                        case 15:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 23:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.LastName).ThenBy(x => x.Age).ToList());
-                            break;
-                        case 24:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.LastName).ThenBy(x => x.Salary).ToList());
-                            break;
-                        case 25:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.LastName).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 34:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.Age).ThenBy(x => x.Salary).ToList());
-                            break;
-                        case 35:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.Age).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                        case 45:
-                            workerList = new List<Worker>(workerList.OrderBy(x => x.Salary).ThenBy(x => x.NumberProjects).ToList());
-                            break;
-                    }
+                    if (firstFields == 1 && secondFields == 2)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.LastName).ToList());
+                    else if (firstFields == 1 && secondFields == 3)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.Age).ToList());
+                    else if (firstFields == 1 && secondFields == 4)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.Salary).ToList());
+                    else if (firstFields == 1 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.FirstName).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 2 && secondFields == 3)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.LastName).ThenBy(x => x.Age).ToList());
+                    else if (firstFields == 2 && secondFields == 4)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.LastName).ThenBy(x => x.Salary).ToList());
+                    else if (firstFields == 2 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.LastName).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 3 && secondFields == 4)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.Age).ThenBy(x => x.Salary).ToList());
+                    else if (firstFields == 4 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Department).ThenBy(x => x.Age).ThenBy(x => x.NumberProjects).ToList());
+                    else if (firstFields == 4 && secondFields == 5)
+                        workerList = new List<Worker>(workerList.OrderBy(x => x.Salary).ThenBy(x => x.NumberProjects).ToList());
                     break;
             }
             return workerList;

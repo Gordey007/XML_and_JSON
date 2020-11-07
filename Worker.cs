@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Homework_08
 {
     public class Worker
@@ -41,6 +36,10 @@ namespace Homework_08
 
         #region Методы
 
+        /// <summary>
+        /// Метод вывода консоль
+        /// </summary>
+        /// <returns>Стракоку для вывода </returns>
         public string Print()
         {
             return $"{this.uniqueNumber,5} {this.firstName,15} {this.lastName,15} {this.age,5} {this.department,15} {this.salary,10} {this.numberProjects,5}";

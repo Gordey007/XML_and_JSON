@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Homework_08
 {
@@ -33,9 +29,13 @@ namespace Homework_08
 
         #region Методы
 
+        /// <summary>
+        /// Метод вывода консоль
+        /// </summary>
+        /// <returns>Стракоку для вывода </returns>
         public string Print()
         {
-            return $"{this.nameDepartment,5} {this.dateCreation,15} {this.countWorker,15}";
+            return $"{this.nameDepartment,15} {this.dateCreation.ToLongDateString(),20} {this.countWorker,5}";
         }
 
         #endregion

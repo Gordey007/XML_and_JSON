@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Serialization;
+﻿using System;
 
 namespace Homework_08
 {
@@ -88,22 +83,50 @@ namespace Homework_08
             ///  5   Имя_5     Фамилия_5          22         Отдел_2            20000                      3 
             /// 
 
-            Collection collection = new Collection();
-            Menu menu = new Menu(collection);
+
+            // Создание адреса классов рабочего и департамента
+            CollectionWorker collectionWorker;
+            CollectionDepartment collectionDepartment;
+            collectionWorker = new CollectionWorker();
+            collectionDepartment = new CollectionDepartment();
+
+            // Создание адреса класса меню
+            Menu menu = null;
 
             // Бесконечный цикл
             while (true)
             {
-                menu.MenuText();
-                uint case_ = Convert.ToUInt32(Console.ReadLine());
-                menu.MenuCase(case_);
+                Console.WriteLine("Ввидите с какой таблицей хотите работать.\n1 - Worker\n2 - Department");
+                
+                // Для выбора с каким классом работать рабочий или департамент
+                int collectionCase = Convert.ToInt32(Console.ReadLine());
 
-                if (case_ == 11)
+                // Инцелизация класса рабочий или департамент
+                if (collectionCase == 1)
                 {
-
-                    // Выход из программы
-                    break;
+                    
+                    menu = new Menu(collectionWorker);
                 }
+                else if (collectionCase == 2)
+                {
+                    
+                    menu = new Menu(collectionDepartment);
+                }
+
+                try
+                {
+                    // Вызов метода, который выводит меню
+                    menu.MenuText(collectionCase);
+                    // Запись в положительную целочисленную переменную для последующего выбора вызова метода
+                    uint case_ = Convert.ToUInt32(Console.ReadLine());
+                    // Вызов метода выбора метода из класса рабочего или департамента
+                    menu.MenuCase(case_, collectionCase);
+
+                    if (case_ == 11 || (case_ == 8 && collectionCase == 2))
+                        // Выход из программы
+                        break;
+                }
+                catch { }
             }          
         }
     }

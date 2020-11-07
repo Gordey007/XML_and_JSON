@@ -1,21 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Homework_08
 {
     class Menu
     {
-        public Menu(Collection Collection)
+        #region Конструкторы
+
+        public Menu(CollectionWorker CollectionWorker)
         {
-            this.collection = Collection;
+            this.collectionWorker = CollectionWorker;
         }
+
+        public Menu(CollectionDepartment CollectionDepartment)
+        {
+            this.collectionDepartment = CollectionDepartment;
+        }
+
+        #endregion
 
         #region Методы
 
-        public void MenuCase(uint case_)
+        /// <summary>
+        /// Метод выбора методов классов рабочего или департамента
+        /// </summary>
+        /// <param name="case_">Указатель на метод</param>
+        /// <param name="collectionCase">Указатель на класс</param>
+        public void MenuCase(uint case_, int collectionCase)
         { 
             // Оператор выбора
             switch (case_)
@@ -23,104 +33,192 @@ namespace Homework_08
                 // Создания синтетических данных 
                 case 0:
                     Console.WriteLine();
-                    collection.workerList.Clear();
-                    Console.Write("Ввидите количество рабочих: ");
+                    Console.Write("Ввидите количество рабочих или департаментов: ");
                     int n = Convert.ToInt32(Console.ReadLine());
-                    collection.CountGeneratingSyntheticData(n);
 
-                    // Вызов Метода, который выводит информацию в консоль
-                    //Print(collection.workerList);
-                    collection.Print(collection.workerList);
+                    if (collectionCase == 1)
+                    {
+                        collectionWorker.workerList.Clear();
+                        collectionWorker.CountGeneratingSyntheticData(n);
+
+                        // Вызов Метода, который выводит информацию в консоль
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }
+                    else
+                    {
+                        collectionDepartment.departmentList.Clear();
+                        collectionDepartment.CountGeneratingSyntheticData(n);
+
+                        // Вызов Метода, который выводит информацию в консоль
+                        collectionDepartment.Print(collectionDepartment.departmentList);
+                    }                                  
                     Console.WriteLine();
                     break;
                 case 1:
                     Console.WriteLine();
                     // Вызов Метода, который десериализует данные из xml файла
-                    collection.workerList = collection.DeserializeWorkerListXML(@"D:\workerListXML");
-                    collection.Print(collection.workerList);
+                    if (collectionCase == 1)
+                    {
+                        CollectionWorker.workerList = CollectionWorker.DeserializeXML(@"D:\workerListXML");
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }
+                    else
+                    {
+                        CollectionDepartment.departmentList = CollectionDepartment.DeserializeXML(@"D:\departmentListXML");
+                        CollectionDepartment.Print(CollectionDepartment.departmentList);
+                    }
                     Console.WriteLine();
                     break;
                 case 2:
                     // Вызов Метода, который серелизует данные в xml файл
-                    collection.SerializeWorkerListXML(@"D:\workerListXML", collection.workerList);
+                    if (collectionCase == 1)
+                        CollectionWorker.SerializeXML(@"D:\workerListXML", CollectionWorker.workerList);
+                    else
+                        CollectionDepartment.SerializeXML(@"D:\departmentListXML", CollectionDepartment.departmentList);
                     break;
                 case 3:
                     // Вызов Метода, который десериализует данные из json файла
-                    collection.workerList = collection.JSON(true, @"D:\workerListJSON.json");
-                    collection.Print(collection.workerList);
+                    if (collectionCase == 1)
+                    {
+                        CollectionWorker.workerList = CollectionWorker.JSON(true, @"D:\workerListJSON.json");
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }
+                    else
+                    {
+                        CollectionDepartment.departmentList = CollectionDepartment.JSON(true, @"D:\departmentListJSON.json");
+                        CollectionDepartment.Print(CollectionDepartment.departmentList);
+                    }
                     Console.WriteLine();
                     break;
                 case 4:
                     // Вызов Метода, который серелизует данные в json файл
-                    collection.JSON(false, @"D:\workerListJSON.json", collection.workerList);
+                    if (collectionCase == 1)
+                        CollectionWorker.JSON(false, @"D:\workerListJSON.json", CollectionWorker.workerList);
+                    else
+                        CollectionDepartment.JSON(false, @"D:\departmentListJSON.json", CollectionDepartment.departmentList);
                     break;
                 case 5:
                     Console.WriteLine();
-                    // Вызов Метода, который добавляет нового Worker
-                    collection.AddData(collection.workerList);
-                    collection.Print(collection.workerList);
+                    // Вызов Метода, который добавляет нового Departments
+                    if (collectionCase == 1)
+                    {
+                        CollectionWorker.AddData(CollectionWorker.workerList);
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }
+                    else
+                    {
+                        CollectionDepartment.AddData(CollectionDepartment.departmentList);
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }         
                     Console.WriteLine();
                     break;
                 case 6:
                     Console.Write("Ввидите номер строки: ");
-                    // Вызов Метода, который редактирует данные выбранного Worker
-                    collection.EditData(collection.workerList, Convert.ToInt32(Console.ReadLine()));
-                    collection.Print(collection.workerList);
+                    // Вызов Метода, который редактирует данные выбранного Departments
+                    if (collectionCase == 1)
+                    {
+                        CollectionWorker.EditData(CollectionWorker.workerList, Convert.ToInt32(Console.ReadLine()));
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }
+                    else
+                    {
+                        CollectionDepartment.EditData(CollectionDepartment.departmentList, Convert.ToInt32(Console.ReadLine()));
+                        CollectionDepartment.Print(CollectionDepartment.departmentList);
+                    }
                     Console.WriteLine();
                     break;
                 case 7:
                     Console.Write("Ввидите номер строки: ");
-                    // Вызов Метода, который удаляет Worker
-                    collection.DelData(collection.workerList, Convert.ToInt32(Console.ReadLine()));
-                    collection.Print(collection.workerList);
+                    // Вызов Метода, который удаляет Departments
+                    if (collectionCase == 1)
+                    {
+                        CollectionWorker.DelData(CollectionWorker.workerList, Convert.ToInt32(Console.ReadLine()));
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }
+                    else
+                    {
+                        CollectionDepartment.DelData(CollectionDepartment.departmentList, Convert.ToInt32(Console.ReadLine()));
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                    }
                     break;
                 case 8:
-                    Console.WriteLine();
-                    // Вызов Метода, который получает свойства Worker
-                    collection.GetProperties(collection.workerList, 1);
-                    Console.Write("Ввидите номер поля: ");
-                    // Вызов Метода сортировки
-                    collection.workerList = collection.SortWorkerList(collection.workerList, 1, Convert.ToUInt32(Console.ReadLine()));
-                    collection.Print(collection.workerList);
-                    Console.WriteLine();
+                    if (collectionCase == 1)
+                    {
+                        Console.WriteLine();
+                        // Вызов Метода, который получает свойства Departments
+                        CollectionWorker.GetProperties(CollectionWorker.workerList, 1);
+                        Console.Write("Ввидите номер поля: ");
+                        // Вызов Метода сортировки
+                        CollectionWorker.workerList = CollectionWorker.SortWorkerList(CollectionWorker.workerList, 1, Convert.ToUInt32(Console.ReadLine()));
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                        Console.WriteLine();
+                    }
                     break;
                 case 9:
-                    Console.WriteLine();
-                    collection.GetProperties(collection.workerList, 1);
-                    Console.Write("Ввидите номера двух полей без пробела и не через Enter (пример \"12\", \"35\"): ");
-                    collection.workerList = collection.SortWorkerList(collection.workerList, 2, Convert.ToUInt32(Console.ReadLine()));
-                    collection.Print(collection.workerList);
-                    Console.WriteLine();
+                    if (collectionCase == 1)
+                    {
+                        Console.WriteLine();
+                        CollectionWorker.GetProperties(CollectionWorker.workerList, 1);
+                        Console.WriteLine("Ввидите номера двух полей через Enter: ");
+                        CollectionWorker.workerList = CollectionWorker.SortWorkerList(CollectionWorker.workerList, 2, Convert.ToUInt32(Console.ReadLine()), Convert.ToUInt32(Console.ReadLine()));
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                        Console.WriteLine();
+                    }       
                     break;
                 case 10:
-                    Console.WriteLine();
-                    collection.GetProperties(collection.workerList, 2);
-                    Console.Write("Ввидите номера двух полей без пробела и не через Enter (пример \"12\", \"35\"): ");
-                    collection.workerList = collection.SortWorkerList(collection.workerList, 3, Convert.ToUInt32(Console.ReadLine()));
-                    collection.Print(collection.workerList);
-                    Console.WriteLine();
+                    if (collectionCase == 1)
+                    {
+                        Console.WriteLine();
+                        CollectionWorker.GetProperties(CollectionWorker.workerList, 2);
+                        Console.WriteLine("Ввидите номера двух полей через Enter: ");
+                        CollectionWorker.workerList = CollectionWorker.SortWorkerList(CollectionWorker.workerList, 3, Convert.ToUInt32(Console.ReadLine()), Convert.ToUInt32(Console.ReadLine()));
+                        CollectionWorker.Print(CollectionWorker.workerList);
+                        Console.WriteLine();
+                    }     
                     break;
             }
         }
 
 
-        public void MenuText()
+        /// <summary>
+        /// Метод вывода меню
+        /// </summary>
+        /// <param name="collectionCase">Указатель на класс</param>
+        public void MenuText(int collectionCase)
         {
-            Console.WriteLine("Ввидете команду." +
-               "\n0 - Сгенерировать синтетические данные" +
-               "\n1 - Импортировать данные из XML файла." +
-               "\n2 - Экспортировать данные в XML файл." +
-               "\n3 - Импортировать данные из JSON файла." +
-               "\n4 - Экспортировать данные в JSON файл." +
-               "\n5 - Добавить данные" +
-               "\n6 - Редаткировать данные." +
-               "\n7 - Удалить данные" +
-               "\n8 - Упорядочивание по одному полю возраст" +
-               "\n9 - Упорядочивание по двум полям" +
-               "\n10 - Упорядочивание по двум полям в рамках одного департамента" +
-               "\n11 - Выход из программы");
+            if (collectionCase == 1)
+            {
+                Console.WriteLine("Ввидете команду." +
+              "\n0 - Сгенерировать синтетические данные" +
+              "\n1 - Импортировать данные из XML файла." +
+              "\n2 - Экспортировать данные в XML файл." +
+              "\n3 - Импортировать данные из JSON файла." +
+              "\n4 - Экспортировать данные в JSON файл." +
+              "\n5 - Добавить данные" +
+              "\n6 - Редаткировать данные." +
+              "\n7 - Удалить данные" +
+              "\n8 - Упорядочивание по одному полю возраст" +
+              "\n9 - Упорядочивание по двум полям" +
+              "\n10 - Упорядочивание по двум полям в рамках одного департамента" +
+              "\n11 - Выход из программы");
 
-            Console.Write("> ");
+                Console.Write("> ");
+            }
+            else
+            {
+                Console.WriteLine("Ввидете команду." +
+              "\n0 - Сгенерировать синтетические данные" +
+              "\n1 - Импортировать данные из XML файла." +
+              "\n2 - Экспортировать данные в XML файл." +
+              "\n3 - Импортировать данные из JSON файла." +
+              "\n4 - Экспортировать данные в JSON файл." +
+              "\n5 - Добавить данные" +
+              "\n6 - Редаткировать данные." +
+              "\n7 - Удалить данные" +
+              "\n8 - Выход из программы");
+
+                Console.Write("> ");
+            }
         }
 
         #endregion
@@ -130,7 +228,12 @@ namespace Homework_08
         /// <summary>
         /// Наименование
         /// </summary>
-        public Collection Collection { get { return this.collection; } set { this.collection = value; } }
+        public CollectionWorker CollectionWorker { get { return this.collectionWorker; } set { this.collectionWorker = value; } }
+
+        /// <summary>
+        /// Наименование
+        /// </summary>
+        public CollectionDepartment CollectionDepartment { get { return this.collectionDepartment; } set { this.collectionDepartment = value; } }
 
         #endregion
 
@@ -139,7 +242,13 @@ namespace Homework_08
         /// <summary>
         /// Поле "Уникальный номер"
         /// </summary>
-        private Collection collection;
+        private CollectionWorker collectionWorker;
+
+
+        /// <summary>
+        /// Поле "Уникальный номер"
+        /// </summary>
+        private CollectionDepartment collectionDepartment;
 
         #endregion
     }
